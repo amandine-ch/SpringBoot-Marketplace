@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body layout:fragment="body">
+    <div class="flex flex-col justify-center items-center text-xl font-semibold p-3">Nos produits</div>
+    <div th:each="article : ${articles}">
+        <a th:href="'product/' + ${article.getId()}">
+            <div class=" float-left w-64 h-64 border p-4 m-4 cursor-pointer">
+                <img th:src="${article.image}" alt="product image" class="mx-auto mb-2 max-h-32">
+                <div>
+                    <h3 th:text="${article.name}" class="text-center mb-2"></h3>
+                    <p th:text="${article.price} + '€'" class="text-center"></p>
+                </div>
+            </div>
+        </a>
+    </div>
+</body>
+</html>

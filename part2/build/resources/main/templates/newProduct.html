@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  layout:decorate="~{layout.html}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body layout:fragment="body">
+
+<div class="flex min-h-[calc(100vh-100px)] flex-col justify-center">
+  <div class="flex flex-row justify-center">
+    <div class="w-[500px] rounded-md p-8 shadow-md">
+      <form class="mb-10"
+            method="post"
+            role="form"
+            th:action="@{/admin/newProduct}"
+            th:object="${article}">
+        <div class="mb-6">
+          <label for="name" class="mb-2 block text-sm font-medium text-gray-900">Nom de l'article</label>
+          <input type="text"
+                 name="name"
+                 th:field="*{name}"
+                 id="name"
+                 placeholder="Vittel"
+                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-none"
+          />
+          <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>
+        </div>
+        <div class="mb-6">
+          <label for="price" class="mb-2 block text-sm font-medium text-gray-900">Prix</label>
+          <input type="text"
+                 th:field="*{price}"
+                 name="price"
+                 id="price"
+                 placeholder="2.65"
+                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-none"
+          />
+          <td th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price error</td>
+        </div>
+        <div class="mb-6">
+          <label for="stock" class="mb-2 block text-sm font-medium text-gray-900">Stock</label>
+          <input type="text"
+                 name="stock"
+                 th:field="*{stock}"
+                 id="stock"
+                 placeholder="158"
+                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-none"
+          />
+          <td th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}">Stock error</td>
+        </div>
+        <div class="mb-6">
+          <label for="image" class="mb-2 block text-sm font-medium text-gray-900">Image</label>
+          <input type="text"
+                 th:field="*{image}"
+                 name="image"
+                 id="image"
+                 placeholder="https://i.imgur.com/NBHwywE.png"
+                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-none"
+          />
+          <td th:if="${#fields.hasErrors('image')}" th:errors="*{image}">Image error</td>
+        </div>
+
+        <button type="submit" class="w-full rounded-full bg-blue-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-500 focus:outline-none">Ajouter</button>
+      </form>
+      <a href="/admin/" class="w-full rounded-full bg-blue-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-500 focus:outline-none">Annuler</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

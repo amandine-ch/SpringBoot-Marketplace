@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  layout:decorate="~{layout.html}">
+<head>
+</head>
+<body layout:fragment="body">
+
+<div class="flex flex-col items-center justify-center">
+    <div class="overflow-x-auto">
+        <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8 ">
+            <div class="overflow-hidden">
+                <table class="min-w-[90%] text-left text-sm font-light" th:if="${not #lists.isEmpty(cartItems)}">
+
+                    <thead class="border-b font-medium dark:border-neutral-500">
+                    <tr>
+                        <th scope="col" class="px-6 py-4">Produit</th>
+                        <th scope="col" class="px-6 py-4">Quantité</th>
+                        <th scope="col" class="px-6 py-4">Prix unitaire</th>
+                        <th scope="col" class="px-6 py-4">Prix total</th>
+                        <th scope="col" class="px-6 py-4">Supprimer</th>
+                    </tr>
+                    </thead>
+
+                    <!-- Affichage du contenu du panier -->
+                    <form action="deleteFromCart" method="post" th:each="cartItem : ${cartItems}">
+                        <tr class="border-b dark:border-neutral-500">
+                            <td class="whitespace-nowrap px-6 py-4"> <span th:text="${cartItem.article.name}"></span></td>
+                            <td class="whitespace-nowrap px-6 py-4"> <span th:text="${cartItem.quantity}"> </span></td>
+                            <td class="whitespace-nowrap px-6 py-4" th:text="${cartItem.article.price}"> </td>
+                            <td class="whitespace-nowrap px-6 py-4" th:text="${cartItem.getItemTotal()}"> </td>
+                            <td class="whitespace-nowrap px-6 py-4">
+                                <form th:action="@{/deleteFromCart}" method="post">
+                                    <input type="hidden" name="articleId" th:value="${cartItem.article.id}" />
+                                    <button type="submit" class="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded inline-flex items-center">Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </form>
+                </table>
+                <tfoot th:if="${not #lists.isEmpty(cartItems)}">
+                <tr>
+                    <td colspan="3"></td>
+                    <td colspan="2">
+                        <div class="flex justify-between items-center">
+                            <div class="px-6 py-4 font-bold" th:text="'Total de la commande : '+ ${cartTotal} + '€'"></div>
+                            <div>
+                                <form th:action="@{/checkout}" method="get">
+                                    <button type="submit" class="rounded-full bg-blue-400 px-4 py-3 text-white hover:bg-blue-500 focus:outline-none">Commander</button>
+                                </form>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div th:if="${#lists.isEmpty(cartItems)}">
+        <p class="mt mt-5 mb mb-10">Votre panier est vide.</p>
+        <a th:href="@{/catalogue}" class=" rounded-full bg-blue-400 px-4 py-3 text-white hover:bg-blue-500 focus:outline-none">Aller au catalogue</a>
+    </div>
+</div>
+
+</body>
+</html>

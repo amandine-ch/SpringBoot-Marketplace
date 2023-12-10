@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!--https://ultraq.github.io/thymeleaf-layout-dialect/processors/decorate/-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <title>E-Commerce</title>
+</head>
+<body>
+<div class="flex h-100px w-full flex-row justify-between p-4 shadow-lg">
+    <div class="w-80"></div>
+    <a th:href="${#authorization.expression('hasRole(''ROLE_ADMIN'')') ? '/admin/' : '/'}">
+        <div class="flex w-48 flex-col justify-center text-center">
+            <img src="https://i.imgur.com/Ozypw75.png" alt="logo">
+        </div>
+    </a>
+    <div class="flex flex-row w-80">
+        <a href="/cart" th:unless="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="mr-4 rounded-full bg-blue-400 px-4 py-3 text-white hover:bg-blue-500 focus:outline-none">Panier</a>
+        <form class="flex h-calc(100px-2*1rem) w-150px flex-col justify-center" th:action="@{${#authorization.expression('hasRole(''ROLE_USER'')') ?  '/logout' : '/login' }}" method="post">
+            <button class="rounded-full bg-blue-400 px-4 py-3 text-white hover:bg-blue-500 focus:outline-none" type="submit">
+                <span th:if="${#authorization.expression('isAuthenticated()')}">Déconnexion</span>
+                <span th:unless="${#authorization.expression('isAuthenticated()')}">Connexion</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<div layout:fragment="body">
+</div>
+</body>
+</html>

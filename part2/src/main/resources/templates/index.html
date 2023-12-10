@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .gradient-radial {
+            background: radial-gradient(circle, lightskyblue, #60a5fa);
+        }
+    </style>
+</head>
+<body layout:fragment="body">
+    <div class="flex flex-col pt-8 justify-center">
+        <div class="flex justify-center text-center">
+            <div class="gradient-radial bg-contain bg-center w-5/6 p-8">
+                <h1 class="text-3xl font-semibold mb-2 text-white"> Bienvenue chez WA'ER</h1>
+                <p class="text-l font-semibold text-white"> Redécouvrez le goût de l'eau avec notre best sell'er</p>
+                <div class="flex justify-center">
+                    <a th:href="'product/' + ${bestSeller.getId()}">
+                        <div class="bg-white float-left   border p-4 m-4 cursor-pointer">
+                            <img th:src="${bestSeller.getImage()}" alt="product image" class="mx-auto mb-2 max-h-32">
+                            <div>
+                                <h3 class="text-center mb-2" th:text="${bestSeller.getName()}"></h3>
+                                <p class="text-center" th:text="${bestSeller.getPrice() + '€'}"></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div >
+        <div class="text-center">
+            <div class="text-xl pt-4 pb-1"> Plus de produits</div>
+            <div class="flex justify-center">
+                <div th:each="article : ${articles}">
+                    <a th:href="'product/' + ${article.getId()}">
+                        <div class=" float-left w-64 h-64 border p-4 m-4 cursor-pointer">
+                            <img th:src="${article.image}" alt="product image" class="mx-auto mb-2 max-h-32">
+                            <div>
+                                <h3 th:text="${article.name}" class="text-center mb-2"></h3>
+                                <p th:text="${article.price} + '€'" class="text-center"></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="p-2">
+                <a th:href="@{/catalogue}" class="rounded-full bg-blue-400 px-4 py-3 text-white hover:bg-blue-500 focus:outline-none">Découvrir notre catalogue complet</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+
+<!doctype html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  layout:decorate="~{layout.html}">
+<head>
+</head>
+<body layout:fragment="body">
+
+<div class="flex flex-col items-center pt-10">
+
+    <!-- Boutons /Admin et /Users -->
+    <div class="w-4/5 bg-white shadow flex justify-between items-center p-4">
+        <div class=" h-full w-full flex items-center">
+            <a href="/admin/user">
+                <button class="py-full px-10 bg-white hover:bg-gray-100 text-gray-800 font-bold rounded">Utilisateurs</button>
+            </a>
+            <a href="/admin/">
+                <button class="py-full ml-2 px-10 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded">Articles</button>
+            </a>
+
+        </div>
+    </div>
+
+    <!-- Tableau des articles -->
+    <div class="w-4/5 bg-white shadow overflow-x-auto">
+        <table class="w-full text-left text-sm font-light border-collapse border-gray-300 bg-white">
+
+
+                    <thead class="border-b font-medium dark:border-neutral-500">
+                    <tr>
+                        <th scope="col" class="px-6 py-4">Name</th>
+                        <th scope="col" class="px-6 py-4">email</th>
+                        <th scope="col" class="px-2 py-4">loyality Points</th>
+                        <th scope="col" class="px-6 py-4">isAdmin</th>
+                    </tr>
+                    </thead>
+
+                    <form th:action="@{/admin/user/addPoints}" method="post" th:each="user : ${users}">
+                        <tr class="border-b dark:border-neutral-500">
+                            <td class="whitespace-nowrap px-6 py-4" th:text="${user.name}">  </td>
+                            <td class="whitespace-nowrap px-6 py-4"th:text="${user.email}"> </td>
+                            <td class="whitespace-nowrap px-2 py-4" > <input name="loyaltyPoints" min="1" max="999" type="number" th:value="${user.loyaltyPoints}"> </td>
+                            <td class="whitespace-nowrap px-6 py-4" th:text="${user.admin}"> </td>
+                            <td class="whitespace-nowrap px-6 py-4">
+                                <form th:action="@{/admin/addPoints}" method="post">
+                                    <input type="hidden" name="userId" th:value="${user.id}" />
+                                    <button type="submit" name="modifier" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">Modifier</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </form>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+

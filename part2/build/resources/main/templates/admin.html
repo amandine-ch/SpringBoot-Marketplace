@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  layout:decorate="~{layout.html}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+</head>
+<body layout:fragment="body" >
+
+<div class="flex flex-col items-center pt-10">
+    <div class="h-full flex items-center">
+        <a href="/admin/newProduct">
+            <button class="h-full ml-2 px-10 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded">Nouveau Produit</button>
+        </a>
+    </div>
+    <!-- Boutons /Admin et /Users -->
+    <div class="w-4/5 bg-white shadow flex justify-between items-center h-full py-5 ">
+        <div class=" h-full w-full flex items-center">
+            <a href="/admin/">
+                <button class="h-full px-10 bg-white hover:bg-gray-100 text-gray-800 font-bold rounded">Articles</button>
+            </a>
+            <a href="/admin/user">
+                <button class=" h-full ml-2 px-10 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded">Utilisateurs</button>
+            </a>
+        </div>
+    </div>
+
+
+
+    <!-- Tableau des articles -->
+    <div class="w-4/5 bg-white shadow overflow-x-auto">
+        <table class="w-full text-left text-sm font-light border-collapse border-gray-300 bg-white">
+            <thead class="border-b font-medium dark:border-neutral-500">
+            <tr>
+                <th scope="col" class="px-6 py-3">Image</th>
+                <th scope="col" class="px-6 py-3">Nom</th>
+                <th scope="col" class="px-6 py-3">Prix</th>
+                <th scope="col" class="px-2 py-3">Stock</th>
+                <th scope="col" class="px-6 py-3">Modifier</th>
+            </tr>
+            </thead>
+            <tbody>
+
+                <tr class="border-b dark:border-neutral-500" th:each="article : ${articles}" th:data-id="${article.id}">
+                    <td class="px-6 py-4"><img th:src="${article.image}" alt="Image Article" class="w-10 h-10"></td>
+                    <td class="whitespace-nowrap px-6 py-4"> <span th:text="${article.name}"> </span></td>
+                    <td class="whitespace-nowrap px-6 py-4"> <span th:text="${article.price}"> </span></td>
+                    <td class="whitespace-nowrap px-2 py-4"> <span th:text="${article.stock}"> </span></td>
+                    <td class="whitespace-nowrap px-6 py-4">
+                        <form th:action="@{/admin/deleteArticle}" method="post">
+                            <input type="hidden" name="articleId" th:value="${article.id}" />
+                            <button type="submit" name="supprimer" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">Supprimer</button>
+                        </form>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
+
+
